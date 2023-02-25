@@ -13,10 +13,12 @@ from bs4 import BeautifulSoup
 from datetime import date
 import cv2
 import cv2 as cv
+from translate import changelang
 import mediapipe as mp
 import numpy as np
 from grammer import correct  
 from googleplaces import GooglePlaces,types,lang
+from imgsc import img
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
     #print(voices[1].id)
@@ -68,10 +70,13 @@ if(k==1):
             print("Recognizing...")    
             query = r.recognize_google(audio, language='en-in')
             print(f"User said: {query}\n")
-            s = str({query})
+            s1 = {query}
+            s = str(s1)
             print(type(s))
             qq = correct(s)
-            print("final command from file ",qq)
+            chanlang = changelang(s)
+            print(changlang)
+        #     print("final command from file ",qq)
         except Exception as e:
             # print(e)    
             print("Say that again please...")  
@@ -786,7 +791,10 @@ if(button==100):
          if(count==50):
 
              tttt=''.join(word)
+             
              import pyttsx3
+             img(tttt)
+           #  chanlang = changelang(tttt)
              engine=pyttsx3.init()
              cv.putText(frame,tttt,(10,70),cv.FONT_HERSHEY_PLAIN,3,(255,0,255),3)
              engine.say(tttt)
